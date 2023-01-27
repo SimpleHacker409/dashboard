@@ -1,0 +1,43 @@
+
+  <div>
+   <p class="h5 p-2 mat-black">HomePage</p>
+  </div>
+
+<div class="w-auto">
+  <div class="dash-cards d-flex flex-column flex-md-row py-4">
+    <mat-card *ngFor="let item of dashCard;" class="col-12 col-md-3 p-0 m-1" >
+    <app-dash-cards [dashCardData]="item" ></app-dash-cards>
+    </mat-card>
+  </div>
+  <div class="">
+    <mat-card>
+      <app-stacked-area></app-stacked-area>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <div class="d-flex flex-column flex-md-row p-2 column">
+<!--       <mat-card class="example-card m-1">
+        <mat-card-content>
+          <app-variable-radius></app-variable-radius>
+        </mat-card-content>
+      </mat-card> -->
+      <mat-card class="col-12 col-md-7 m-1">
+        <mat-card-header>
+          <mat-card-title class="font-weight-light">Logs</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-table-component></app-table-component>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-12 col-md-5 m-1">
+        <mat-card-content>
+          <app-bar-chart></app-bar-chart>
+        </mat-card-content>
+      </mat-card>
+<!--       <mat-card class="example-card m-1">
+        <mat-card-content>
+          <app-variable-radius></app-variable-radius>
+        </mat-card-content>
+      </mat-card> -->
+    </div>
+  </div>
+</div>

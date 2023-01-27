@@ -1,0 +1,38 @@
+table {
+  width: 100%;
+  box-shadow: none !important;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+mat-card {
+  height: fit-content;
+}
+
+.status-text {
+  font-size: smaller;
+}
+
+.bg-success, .bg-danger, .bg-info, .bg-warning {
+  opacity: 0.8;
+}
+.search-icon {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+mat-card-header {
+  padding-top: 8px;
+  color: white;
+  background-color: #9a69ef;
+  border-radius: 5px 5px 0px 0px;
+}

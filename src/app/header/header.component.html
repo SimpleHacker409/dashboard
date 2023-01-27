@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+  <div class="d-flex flex-row w-100 align-items-center">
+    <div class="p-2">
+      <button mat-icon-button (click)="toggleSideBar()" class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div class="p-2">
+      <span>Evolvo</span>
+    </div>
+
+    <div class="ml-auto p-2 d-flex justify-content-around w-25">
+      <button mat-icon-button [matMenuTriggerFor]="menuMessage" class="example-icon user-icon" matBadge="1" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="small">
+        <mat-icon>chat</mat-icon>
+      </button>
+      <mat-menu #menuMessage="matMenu" class="d-flex flex-wrap">
+        <h6 class="mx-3">Chats</h6>
+        <div class="px-3 py-2">
+          <div class="d-flex text-danger">
+            <mat-icon>mark_email_unread</mat-icon>
+            <div class="font-weight-bold px-1">Title of Chat</div>
+          </div>
+          <div class="text-secondary">A short description for the chat comes</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="px-3 py-2">
+          <div class="d-flex text-secondary">
+            <mat-icon>mark_email_read</mat-icon>
+            <div class="font-weight-bold px-1">Title of Chat</div>
+          </div>
+          <div class="text-secondary">A short description for the chat comes</div>
+        </div>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menuNotification" class="example-icon user-icon" matBadge="3" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="small">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #menuNotification="matMenu" class="d-flex flex-wrap">
+        <h6 class="mx-3">Notifications</h6>
+        <div class="px-3 py-2">
+          <div class="d-flex text-danger">
+            <mat-icon>notifications_active</mat-icon>
+            <div class="font-weight-bold px-1">Title of Notification</div>
+          </div>
+          <div class="text-secondary">A short description for the notification comes</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="px-3 py-2">
+          <div class="d-flex text-secondary">
+            <mat-icon>notifications</mat-icon>
+            <div class="font-weight-bold px-1">Title of Notification</div>
+          </div>
+          <div class="text-secondary">A short description for the notification comes</div>
+        </div>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon user-icon" >
+        <mat-icon>face</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            Logout
+            <mat-icon class="m-0 display-6">exit_to_app</mat-icon>
+          </button>
+      </mat-menu>
+    </div>
+</div>
+</mat-toolbar>
