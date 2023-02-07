@@ -33,6 +33,7 @@ const routes: Routes = [
         {path: 'places', component: PlacesComponent},
         {path: '', redirectTo: '/dashboard/homepage', pathMatch: 'full'},
       ]},
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'signup', component: SignupComponent},
       {path: 'login', component: LoginComponent},
       {path: '**', component: PageNotFoundComponent,}
