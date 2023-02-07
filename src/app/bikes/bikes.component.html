@@ -4,7 +4,7 @@
   </div>
   </mat-card>
   <div class="w-100 d-flex justify-content-end mb-2 pr-3">
-    <button mat-raised-button color="primary">Add Bike</button>
+    <button mat-raised-button color="primary" (click)="openPopup()">Add Bike</button>
   </div>
   <table mat-table
        [dataSource]="dataSource" multiTemplateDataRows

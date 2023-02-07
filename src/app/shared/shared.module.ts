@@ -12,6 +12,7 @@ import { VariableRadiusComponent } from './widgets/variable-radius/variable-radi
 import { BarChartComponent } from './widgets/bar-chart/bar-chart.component';
 import { TableComponentComponent } from './widgets/table-component/table-component.component';
 import { DashCardsComponent } from './widgets/dash-cards/dash-cards.component';
+import { SnackbarComponent } from './widgets/snackbar-component/snackbar-component.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DashCardsComponent } from './widgets/dash-cards/dash-cards.component';
     VariableRadiusComponent,
     BarChartComponent,
     TableComponentComponent,
-    DashCardsComponent
+    DashCardsComponent,
+    SnackbarComponent
   ],
   imports: [
     CommonModule,

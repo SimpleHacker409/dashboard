@@ -7,9 +7,7 @@
   <mat-form-field appearance="outline" class="mx-2">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-    <span class="search-icon">
-      <mat-icon>search</mat-icon>
-    </span>
+    <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 shadow-none">

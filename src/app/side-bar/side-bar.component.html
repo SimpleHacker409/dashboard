@@ -7,7 +7,7 @@
   </div>
   <mat-divider></mat-divider>
 <div *ngFor="let item of menu; index as i;">
-  <a class="text-capitalize text-decoration-none" mat-list-item routerLinkActive="list-item-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/',item.name]">
+  <a class="text-capitalize text-decoration-none" mat-list-item routerLinkActive="list-item-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/dashboard',item.name]">
     <mat-icon class="mx-2 mat-black">{{item.icon}}</mat-icon>
     {{item.name}}</a>
 </div>

@@ -52,9 +52,8 @@ img{
 .opacity-2 {
   opacity: 0.8;
 }
-.modal {
-  z-index: 1050 !important;
-}
-::ng-deep .mat-dialog-container {
-  position: fixed;
+
+.md-dialog-container {
+  width: 250px !important;
+  height: 250px !important;
 }

@@ -1,15 +1,1 @@
-<div class="top-0 w-100">
-<app-header (toggleSideBarForMe)="sideBarToggler($event)"></app-header>
-</div>
-<div class="w-100" style="height: calc(100vh - 4rem);">
-  <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav p-0" mode="side" [opened]="sideBarStatus">
-      <app-side-bar></app-side-bar>
-    </mat-drawer>
-    <mat-drawer-content>
-      <div class="example-sidenav-content p-2">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-drawer-content>
-  </mat-drawer-container>
-</div>
+<router-outlet></router-outlet>

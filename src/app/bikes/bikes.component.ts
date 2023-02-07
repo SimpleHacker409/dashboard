@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MatDialog,MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig } from '@angular/material/dialog';
+import { BikeComponent } from './bike/bike.component';
 
 export interface PeriodicElement {
   id: number;
@@ -101,7 +103,7 @@ export class BikesComponent implements OnInit {
   animal: string;
   name: string;
 
-  constructor() {}
+  constructor(private dialog:MatDialog) {}
 
   ngOnInit() {}
 
@@ -109,6 +111,12 @@ export class BikesComponent implements OnInit {
   columnsToDisplay = ['id', 'name', 'pid', 'status','bike_user'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: PeriodicElement | null;
+
+  openPopup() {
+       const dialogRef = this.dialog.open(BikeComponent, {
+        width: 'fit-content',
+       });
+  }
 
 }
 
