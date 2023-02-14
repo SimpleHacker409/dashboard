@@ -12,8 +12,6 @@ export class DashCardsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("Her");
-
     console.log(this.dashCardData);
 
   }

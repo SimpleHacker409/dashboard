@@ -18,6 +18,8 @@ export class SignupComponent implements OnInit {
     pmail: ['', Validators.compose(
       [Validators.required, Validators.email]
       )],
+    password: ['', Validators.required],
+    confirm_password: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     cname: ['', Validators.required],

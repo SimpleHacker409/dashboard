@@ -1,9 +1,6 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -29,6 +26,8 @@ import { AppRoutingModule } from './app-routing.module';
 import {MaterialModule} from './material.module'
 import { SharedModule } from './shared/shared.module';
 import { SharedServiceService } from './shared/shared-service.service';
+import { AuthService } from './shared/auth.service';
+
 
 
 @NgModule({
@@ -54,15 +53,16 @@ import { SharedServiceService } from './shared/shared-service.service';
     DashboardComponent
   ],
   imports: [
-    AngularFireModule,
-    AngularFireAuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
     SharedModule,
   ],
-  providers: [SharedServiceService],
+  providers: [
+    SharedServiceService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,7 +27,7 @@ import { SnackbarComponent } from './widgets/snackbar-component/snackbar-compone
     CommonModule,
     HighchartsChartModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [
     StackedAreaComponent,

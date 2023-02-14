@@ -56,8 +56,16 @@
         <mat-icon>face</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button (click)="logout()" mat-menu-item>
             Logout
+            <mat-icon class="m-0 display-6">exit_to_app</mat-icon>
+          </button>
+          <button (click)="getCurrentUser()" mat-menu-item>
+            GetUser
+            <mat-icon class="m-0 display-6">exit_to_app</mat-icon>
+          </button>
+          <button (click)="isLoggedIn()" mat-menu-item>
+            IsLoggedIn
             <mat-icon class="m-0 display-6">exit_to_app</mat-icon>
           </button>
       </mat-menu>

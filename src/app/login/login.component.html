@@ -5,21 +5,23 @@
       <img src="../../assets/logo_evolvo.svg" class="my-2" alt="" height="40px">
         <h2 class="m-0">Login</h2>
         <p>Please enter all the details</p>
-        <form class="example-form d-flex flex-column">
+        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit(loginFormGroup)" class="example-form d-flex flex-column">
           <mat-form-field class="example-full-width">
             <mat-label>UserName</mat-label>
-            <input matInput placeholder="xxx@xxx.com" value="">
+            <input formControlName="user" matInput placeholder="xxx@xxx.com" value="">
             <mat-icon matPrefix class="mr-2">person</mat-icon>
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="****">
+            <input type="password" formControlName="password" matInput placeholder="****">
             <mat-icon matPrefix class="mr-2">lock</mat-icon>
           </mat-form-field>
           <a href="#">Forgot Password ?</a>
-        </form>
         <button mat-raised-button color="primary" class="w-100 m-3">Login</button>
+        <p class="text-success" *ngIf="isLogin">Login Success</p>
+        <p class="text-danger" *ngIf="!isLogin && isLogin != null">{{logStatus}}</p>
+        </form>
       </div>
       <div class="bg-pattren p-5 rounded-right overflow-hidden">
         <div class="bg-trans p-4 text-light">
