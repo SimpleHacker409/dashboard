@@ -8,9 +8,8 @@
   padding-bottom: 0 !important;
 }
 
-:host ::ng-deep .mat-form-field-infix {
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
+.example-chip-list {
+  width: 100%;
 }
 
 /* :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {

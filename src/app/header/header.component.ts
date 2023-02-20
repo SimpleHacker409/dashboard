@@ -31,10 +31,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.auth.logout()
   }
-  getCurrentUser(){
+/*   getCurrentUser(){
      console.log(this.auth.getUser());
   }
   isLoggedIn() {
     console.log(this.auth.isLogedIn());
-  }
+  } */
 }

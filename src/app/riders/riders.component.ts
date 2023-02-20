@@ -1,25 +1,21 @@
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {FormGroup, FormControl} from '@angular/forms';
+import { SharedServiceService } from '../shared/shared-service.service';
+import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../shared/widgets/snackbar-component/snackbar-component.component';
 
 export interface PeriodicElement {
   name: string;
   email: string;
-  user_status: string;
+  status: string;
   user_id: string;
 }
-
-let ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'giovanni carena', email: 'giovanni@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'marco mayrhofer', email: 'marco@email.com', user_status: 'to activate', user_id: 'U1'},
-  {name: 'lucia lindger', email: 'lucia@email.com', user_status: 'hold', user_id: 'U1'},
-  {name: 'isabella bernard', email: 'isabella@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'angelo elst', email: 'angelo@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'alessandra carena', email: 'alessandra@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'federico katrin', email: 'federico@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'martina kaif', email: 'martina@email.com', user_status: 'active', user_id: 'U1'},
-  {name: 'roberto pandey', email: 'roberto@email.com', user_status: 'to activate', user_id: 'U1'},
-  {name: 'raffaele dravid', email: 'raffaele@email.com', user_status: 'hold', user_id: 'U1'},
-];
+export interface Whitelist {
+  email: string;
+}
 
 @Component({
   selector: 'app-riders',
@@ -30,35 +26,116 @@ let ELEMENT_DATA: PeriodicElement[] = [
 export class RidersComponent implements OnInit {
   selected : any;
   isSelectChanged : any;
-  data = [
-    {name: 'giovanni carena', email: 'giovanni@email.com', user_status: 'active', user_id: 'U1'},
-    {name: 'marco mayrhofer', email: 'marco@email.com', user_status: 'to activate', user_id: 'U2'},
-    {name: 'lucia lindger', email: 'lucia@email.com', user_status: 'hold', user_id: 'U3'},
-    {name: 'isabella bernard', email: 'isabella@email.com', user_status: 'active', user_id: 'U4'},
-    {name: 'angelo elst', email: 'angelo@email.com', user_status: 'active', user_id: 'U1'},
-    {name: 'alessandra carena', email: 'alessandra@email.com', user_status: 'active', user_id: 'U1'},
-    {name: 'federico katrin', email: 'federico@email.com', user_status: 'active', user_id: 'U1'},
-    {name: 'martina kaif', email: 'martina@email.com', user_status: 'active', user_id: 'U1'},
-    {name: 'roberto pandey', email: 'roberto@email.com', user_status: 'to activate', user_id: 'U1'},
-    {name: 'raffaele dravid', email: 'raffaele@email.com', user_status: 'hold', user_id: 'U1'},
-  ];
+  durationInSeconds = 5;
 
-  constructor() { }
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  emails: Whitelist[] = [];
+
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
+  dataSource = new MatTableDataSource<any>();
+  data = [];
+
+  constructor(
+    private service: SharedServiceService,
+    private _snackBar: MatSnackBar,)
+    {
+      this.loadUserData()
+    }
 
   ngOnInit(): void {
   }
-  displayedColumns: string[] = ['name', 'email', 'user_status', 'user_id'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'email', 'status', 'user_id'];
+  //dataSource = new MatTableDataSource(this.data);
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  selectCar(event_data, data) {
-    console.log(data + "changed to" + event_data);
-
+  selectStatus(event_data, data) {
+    this.service.changeWhiteListStatus(data, event_data)
+    .then((res)=>{
+      console.log(res);
+      if(res.status != "error") {
+        this.openSnackBar(data, "changed status : " + event_data)
+      } else {
+        this.openSnackBar("Error", "changed status : " + event_data)
+      }
+    })
     this.isSelectChanged = true;
+  }
+
+  loadUserData() {
+    this.service.getWhiteList().then((res)=>{
+      this.data = res;
+      this.dataSource.data = this.data;
+    })
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add email
+    if (value) {
+      this.emails.push({email: value});
+      console.log(this.emails);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(email: Whitelist): void {
+    const index = this.emails.indexOf(email);
+
+    if (index >= 0) {
+      this.emails.splice(index, 1);
+      console.log(this.emails);
+    }
+  }
+  async addUsers() {
+    console.log("Adduser");
+
+    const startDate = this.dateFormat(this.range.value.start)
+    const endDate = this.dateFormat(this.range.value.end)
+    const response = await this.service.addWhiteList(this.emails, startDate, endDate)
+    if(response == "Success") {
+      this.emails.splice(0, this.emails.length)
+      this.range.reset();
+      this.openSnackBar("WhiteList Updated Sucessfully", "Alert email sent to the users")
+    } else {
+      this.openSnackBar("WhiteList Updated Failed", "Please try again with proper format")
+    }
+  }
+
+  dateFormat(adjustdate) {
+    try {
+      var year = adjustdate.getFullYear()
+      var month = adjustdate.getMonth()+1
+      var date = adjustdate.getDate()
+    } catch(err) {
+        setTimeout(() => {
+        this.openSnackBar("*Important", "no time limit for the users added")
+        }, 3000);
+      return "";
+    }
+    return `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+  }
+  openSnackBar(title, desc) {
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      data: {
+        title: title,
+        description: desc
+      },
+      duration: this.durationInSeconds * 1000,
+    });
   }
 
 }

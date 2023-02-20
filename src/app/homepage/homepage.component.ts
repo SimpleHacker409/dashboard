@@ -8,11 +8,16 @@ import { SharedServiceService } from '../shared/shared-service.service';
 })
 export class HomepageComponent implements OnInit {
   dashCard: any;
+  users: number;
 
-  constructor(private sharedService: SharedServiceService) { }
+  constructor(private service: SharedServiceService) { }
 
   ngOnInit() {
-     this.dashCard = this.sharedService.dashCardFunction()
+     this.dashCard = this.service.dashCardFunction()
+     this.service.getWhiteList().then((res)=>{
+      this.users = res.length;
+      this.dashCard[0].data = this.users;
+     })
   }
 
 }

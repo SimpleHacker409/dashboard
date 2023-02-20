@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
+import { SharedServiceService } from '../shared/shared-service.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private service: SharedServiceService
   ) {}
 
   ngOnInit() {

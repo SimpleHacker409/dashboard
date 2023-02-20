@@ -20,6 +20,7 @@ export class AuthService {
     try {
       const response = await axios.post('http://75.119.144.170:300/login', user, {headers});
       if(await response.data.status == "success") {
+
         this.saveToken(response.data.result[0].domain, response.data.result[0].cid)
         this.router.navigate(['/dashboard'])
         return "Success";
@@ -37,6 +38,9 @@ export class AuthService {
     console.log("LogOut");
     this.removeToken()
     this.router.navigate(['/login'])
+    .then(() => {
+      window.location.reload();
+    });
   }
 
   public isLogedIn() {

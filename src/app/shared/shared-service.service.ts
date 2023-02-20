@@ -1,46 +1,150 @@
-import { Injectable } from '@angular/core';
-import { Axios } from 'axios';
+import { Injectable, OnInit } from '@angular/core';
+import axios from 'axios';
+import { AuthService } from './auth.service';
+
+export interface User {
+  id: number;
+  cid: string;
+  company_name: string;
+  manager_name: string;
+  manager_surname
+  address: string
+  piva: string,
+  sdi: string,
+  phone: string,
+  iban: string,
+  domain: string,
+  white_list: number,
+  status: string,
+  pmail: string,
+  cmail: string,
+  pass: string,
+  logo: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class SharedServiceService {
+export class SharedServiceService implements OnInit {
 
-  constructor() { }
+  constructor(private auth : AuthService) {}
+
+  Adminmenu =
+  [
+    {name:'homepage',icon:'homepage'},
+    {name:'bookings',icon:'bookings'},
+    {name:'bikes',icon:'bike_scooter'},
+    {name:'riders',icon:'sports_motorsports'},
+    {name:'pricing',icon:'payment'},
+    {name:'places',icon:'home_work'},
+    {name:'promotions',icon:'wallet'},
+    {name:'reports',icon:'report'},
+    {name:'settings',icon:'settings'}
+  ];
+
+  Usermenu =
+  [
+    {name:'homepage',icon:'homepage'},
+    {name:'riders',icon:'sports_motorsports'},
+    {name:'pricing',icon:'payment'},
+  ];
+
+  user : User;
+  userStatus : string;
+  cid = JSON.parse(localStorage.getItem('userToken'))
+
+  ngOnInit() {
+    this.getCurrentUser()
+    console.log("Shared Service");
+  }
+
+  async getCurrentUser () {
+    try {
+      const response = await axios.get('http://75.119.144.170:300/getUser?userID='+this.cid.userId)
+      this.user = await response.data.result[0]
+      console.log(this.user);
+
+      this.userStatus = await response.data.result[0].status;
+      return response.data.result[0];
+    } catch(error) {
+      console.log("User GetError");
+    }
+    //this.user = await axios.get('/getUser?='+cid.userId)
+  }
+
+  getMenu() {
+    console.log(this.userStatus);
+
+    if(this.userStatus == "admin") {
+      return this.Adminmenu;
+    } else {
+      return this.Usermenu;
+    }
+  }
+
+  async addWhiteList(emails, startDate, endDate) {
+    const headers = { 'Content-Type': 'application/json' };
+    let data = {"emails": emails,"cid":this.user.cid,"status": "to activate","startdate": startDate, "enddate":endDate}
+    try {
+      const response = await axios.post('http://75.119.144.170:300/addWhitelist', data, {headers});
+      if(await response.data.status == "success") {
+        return "Success";
+      } else {
+        return "Update Failed";
+      }
+    } catch (error) {
+      console.log(error);
+      return "Server problem";
+    }
+  }
+  async getWhiteList(){
+    const res = await axios.get('http://75.119.144.170:300/getWhitelist?userID='+this.cid.userId)
+    console.log(res.data.result);
+
+    return res.data.result
+  }
+
+  async changeWhiteListStatus(email, statusToChange) {
+    const headers = { 'Content-Type': 'application/json' };
+    const data = {"cid": this.user.cid,"email":email,"status": statusToChange}
+    try {
+      const response = await axios.put('http://75.119.144.170:300/changeWhitelistStatus', data, {headers});
+      return response;
+    } catch(err) {
+      return {status: "error", message: err}
+    }
+  }
 
   dashCardFunction() {
     var dashCard = [
       {
         dasTitle:"User Data",
-        data:"10K",
+        data:0,
         description:"User Registraion",
         icon:"group",
       },{
         dasTitle:"Kilometer",
-        data:"30K",
+        data:0,
         description:"Kilometer Recording",
         icon:"map",
       },{
         dasTitle:"Revenue",
-        data:"12K",
+        data:0,
         description:"Total Price",
         icon:"payments",
       },{
         dasTitle:"Locations",
-        data:"12",
-        description:"Places",
+        data:1,
+        description:"Place",
         icon:"location_city",
       }
     ]
     return dashCard;
   }
+
   getLog() {
     var logData = [
-      {name: 'Maximo David', weight: "Booked E-Bike-1", symbol: '27/01/2023 12:57'},
-      {name: 'Rebeca Soreti', weight: "Booked E-Bike-5", symbol: '25/01/2023 21:23'},
-      {name: 'Valentina', weight: "Requested Refund", symbol: '24/01/2023 13:32'},
-      {name: 'Arnesto Damiyani', weight: "Trip Ended", symbol: '22/01/2023 22:57'},
-      {name: 'Naman Guptha', weight: "App Report", symbol: '20/01/2023 14:16'},
+      {name: '_', data: "_", time: '_'},
     ];
     return logData;
   }
