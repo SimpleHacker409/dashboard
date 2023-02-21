@@ -62,18 +62,18 @@ export class SharedServiceService implements OnInit {
     try {
       const response = await axios.get('http://75.119.144.170:300/getUser?userID='+this.cid.userId)
       this.user = await response.data.result[0]
-      console.log(this.user);
+      //console.log(this.user);
 
       this.userStatus = await response.data.result[0].status;
       return response.data.result[0];
     } catch(error) {
-      console.log("User GetError");
+      //console.log("User GetError");
     }
     //this.user = await axios.get('/getUser?='+cid.userId)
   }
 
   getMenu() {
-    console.log(this.userStatus);
+    //console.log(this.userStatus);
 
     if(this.userStatus == "admin") {
       return this.Adminmenu;
@@ -93,13 +93,13 @@ export class SharedServiceService implements OnInit {
         return "Update Failed";
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return "Server problem";
     }
   }
   async getWhiteList(){
     const res = await axios.get('http://75.119.144.170:300/getWhitelist?userID='+this.cid.userId)
-    console.log(res.data.result);
+    //console.log(res.data.result);
 
     return res.data.result
   }

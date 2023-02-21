@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
   title = 'dashboard';
   sideBarStatus = true;
   ngOnInit(): void {
-    console.log("OnInit App");
+    //console.log("OnInit App");
   }
 
   sideBarToggler(event) {

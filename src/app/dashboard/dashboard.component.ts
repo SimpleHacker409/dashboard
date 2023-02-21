@@ -21,12 +21,12 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.auth.getUser());
-    console.log(this.auth.isLogedIn());
+    //console.log(this.auth.getUser());
+    //console.log(this.auth.isLogedIn());
     if(!this.auth.isLogedIn()){
       this.router.navigate(['/login'])
     }
-    console.log("OnInit App");
+    //console.log("OnInit App");
   }
 
   sideBarToggler(event) {

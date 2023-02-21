@@ -12,7 +12,7 @@ export class DashCardsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.dashCardData);
+    //console.log(this.dashCardData);
 
   }
 
