@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    console.log("Logout Invoke");
+
     this.auth.logout()
   }
 /*   getCurrentUser(){

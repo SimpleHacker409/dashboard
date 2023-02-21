@@ -8,7 +8,7 @@ import { SharedServiceService } from '../../shared-service.service';
 })
 export class TableComponentComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['name', 'data', 'time'];
   dataSource: any;
 
   constructor(private sharedService: SharedServiceService) { }
