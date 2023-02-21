@@ -23,6 +23,9 @@ export class AuthService {
 
         this.saveToken(response.data.result[0].domain, response.data.result[0].cid)
         this.router.navigate(['/dashboard'])
+        .then(() => {
+          window.location.reload();
+        });
         return "Success";
       } else {
         return "Login Failed";

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedServiceService } from '../shared/shared-service.service';
+import { SharedServiceService, User } from '../shared/shared-service.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -7,18 +7,22 @@ import { SharedServiceService } from '../shared/shared-service.service';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent implements OnInit {
-  constructor(private service : SharedServiceService) {}
 
   menu : any
-  user : any
+  user : User
+  logo: any;
+
+  constructor(private service : SharedServiceService) {}
 
   ngOnInit() {
     this.getUser();
    }
 
-  async getUser() {
-    this.user = await this.service.getCurrentUser()
-    .finally(()=>{
+  getUser() {
+    this.service.getCurrentUser()
+    .then((res)=>{
+      this.user = res;
+      this.logo = res.logo;
       this.getMenu()
     })
   }

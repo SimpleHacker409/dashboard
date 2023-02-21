@@ -63,7 +63,7 @@ export class StackedAreaComponent implements OnInit {
         },
         series: [{
             name: await this.service.getCurrentUser().then((res)=>{return res.company_name}),
-            data: [1, 1, 1, 1,1,1,1,1,1,1,1,1],
+            data: [0, 1, 0, 0,0,0,0,0,0,0,0,0],
             marker : {
               symbol: 'circle',
               radius: 2
