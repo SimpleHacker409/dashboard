@@ -104,6 +104,18 @@ export class SharedServiceService implements OnInit {
     return res.data.result
   }
 
+  async getRentals() {
+    const res = await axios.get('http://75.119.144.170:300/getRentals?cid='+this.user.cid)
+    const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    res.data.data.forEach((value) => {
+      const tripDate = new Date(value.trip_start);
+      const month = tripDate.getMonth();
+      data[month]++;
+      console.log(data);
+      })
+    return data;
+  }
+
   async changeWhiteListStatus(email, statusToChange) {
     const headers = { 'Content-Type': 'application/json' };
     const data = {"cid": this.user.cid,"email":email,"status": statusToChange}

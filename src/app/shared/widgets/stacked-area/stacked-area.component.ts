@@ -11,10 +11,16 @@ import { SharedServiceService } from '../../shared-service.service';
 export class StackedAreaComponent implements OnInit {
   chartOptions: any;
   Highcharts = Highcharts
+  charts : any;
+  data : number[] = [];
 
-    constructor(private service : SharedServiceService) { }
+    constructor(private service : SharedServiceService) {}
 
-    async ngOnInit() {
+    ngOnInit() {
+      this.initChart();
+    }
+
+    async initChart() {
       this.chartOptions = {
         chart: {
             type: 'area'
@@ -63,7 +69,7 @@ export class StackedAreaComponent implements OnInit {
         },
         series: [{
             name: await this.service.getCurrentUser().then((res)=>{return res.company_name}),
-            data: [0, 1, 0, 0,0,0,0,0,0,0,0,0],
+            data: await this.service.getRentals(),
             marker : {
               symbol: 'circle',
               radius: 2
@@ -73,6 +79,7 @@ export class StackedAreaComponent implements OnInit {
       };
       HC_exporting(Highcharts);
     }
+
 
 }
 

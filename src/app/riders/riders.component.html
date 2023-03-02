@@ -7,7 +7,7 @@
 <!--Add Email Card-->
 <mat-card class="example-card w-100 mt-2 shadow-none">
   <div class="d-flex">
-    <mat-form-field class="example-chip-list" appearance="fill">
+    <mat-form-field class="example-chip-list mr-2" appearance="fill">
       <mat-label>Add emails to list</mat-label>
       <mat-chip-list #chipList aria-label="Email selection">
         <mat-chip *ngFor="let email of emails" [selectable]="selectable"
@@ -41,7 +41,7 @@
 </mat-card>
 <!--Email List Card-->
 <mat-card class="w-100 mt-2 p-0">
-  <mat-form-field appearance="outline" class="mx-2">
+  <mat-form-field appearance="outline" class="mx-2 mt-1">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
     <mat-icon matSuffix>search</mat-icon>
