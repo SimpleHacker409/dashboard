@@ -111,7 +111,7 @@ export class SharedServiceService implements OnInit {
       const tripDate = new Date(value.trip_start);
       const month = tripDate.getMonth();
       data[month]++;
-      console.log(data);
+      //console.log(data);
       })
     return data;
   }

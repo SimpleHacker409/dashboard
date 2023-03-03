@@ -16,5 +16,4 @@ export class TableComponentComponent implements OnInit {
   ngOnInit() {
     this.dataSource = this.sharedService.getLog()
   }
-
 }

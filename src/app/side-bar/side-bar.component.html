@@ -4,7 +4,7 @@
 
     <div class="profile-card text-center my-3">
       <h1 class="font-weight-normal mb-0" *ngIf="user && user.company_name">{{user.company_name}}</h1>
-      <h4 class="font-weight-normal" *ngIf="user && user.cmail">{{user.cmail}}</h4>
+      <h4 class="font-weight-normal" *ngIf="user && user.pmail">{{user.pmail}}</h4>
     </div>
     <mat-divider></mat-divider>
   <div *ngFor="let item of menu; index as i;">
