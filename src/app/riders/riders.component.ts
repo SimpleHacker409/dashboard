@@ -113,6 +113,7 @@ export class RidersComponent implements OnInit {
     } else {
       this.openSnackBar("WhiteList Updated Failed", "Please try again with proper format")
     }
+    this.loadUserData()
   }
 
   dateFormat(adjustdate) {
@@ -136,6 +137,11 @@ export class RidersComponent implements OnInit {
       },
       duration: this.durationInSeconds * 1000,
     });
+  }
+  deleteRider(email) {
+    confirm("email")
+    console.log("Deleted" + email);
+
   }
 
 }
