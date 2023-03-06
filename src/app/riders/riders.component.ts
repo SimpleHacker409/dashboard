@@ -115,6 +115,15 @@ export class RidersComponent implements OnInit {
     }
     this.loadUserData()
   }
+  async deleteRider(email) {
+    const res = await this.service.deleteWhitelist(email)
+    if(res.data.status == "success") {
+      this.openSnackBar(email, "Successfully deleted, Whitelist Updated")
+    } else {
+      this.openSnackBar(email, "Failed, Whitelist Updated")
+    }
+    this.loadUserData()
+  }
 
   dateFormat(adjustdate) {
     try {
@@ -137,11 +146,6 @@ export class RidersComponent implements OnInit {
       },
       duration: this.durationInSeconds * 1000,
     });
-  }
-  deleteRider(email) {
-    confirm("email")
-    console.log("Deleted" + email);
-
   }
 
 }

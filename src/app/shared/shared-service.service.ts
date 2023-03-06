@@ -104,6 +104,10 @@ export class SharedServiceService implements OnInit {
     return res.data.result
   }
 
+  async deleteWhitelist(email) {
+    return axios.delete('http://75.119.144.170:300/deleteWhitelist?email='+email+'&cid='+this.cid.userId)
+  }
+
   async getRentals() {
     const res = await axios.get('http://75.119.144.170:300/getRentals?cid='+this.user.cid)
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
