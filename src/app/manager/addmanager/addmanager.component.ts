@@ -22,6 +22,7 @@ export class AddmanagerComponent implements OnInit {
     status:new FormControl({value:'Manager', disabled:true})
   })
   isWait = false;
+  formError: boolean;
 
     constructor(
       private service: SharedServiceService,
@@ -45,16 +46,24 @@ export class AddmanagerComponent implements OnInit {
       "token":value.pass,
       "status":'manager'
     }
-    this.service.addManager(person).then(res => {
-      console.log(res);
+    console.log(this.addManager);
+    if(this.addManager.status != 'INVALID') {
+      this.service.addManager(person).then(res => {
+        console.log(res);
+        this.isWait = false;
+        if(res.data.status == 'success') {
+          this.addManager.reset();
+          this.data.parent.onCloseDialog();
+          this.data.parent.getManager();
+          this.data.parent.openSnackBar(person.mail, 'Added Successfully')
+        }
+      })
+      this.formError = false;
+    } else {
+      this.formError = true;
       this.isWait = false;
-      if(res.data.status == 'success') {
-        this.addManager.reset();
-        this.data.parent.onCloseDialog();
-        this.data.parent.getManager();
-        this.data.parent.openSnackBar(person.mail, 'Added Successfully')
-      }
-    })
+    }
+
     console.log(person);
   }
 
