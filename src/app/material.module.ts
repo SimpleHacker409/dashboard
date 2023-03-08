@@ -23,6 +23,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+
 
 
 
@@ -53,6 +57,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatStepperModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
   declarations: [],
   exports: [
@@ -79,6 +85,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatStepperModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
 })
 export class MaterialModule {}

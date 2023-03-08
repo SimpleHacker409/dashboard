@@ -47,6 +47,14 @@ export class SharedServiceService implements OnInit {
     {name:'homepage',icon:'homepage'},
     {name:'riders',icon:'sports_motorsports'},
     {name:'pricing',icon:'payment'},
+    {name:'manager',icon:'manage_accounts'},
+  ];
+
+  Managermenu =
+  [
+    {name:'homepage',icon:'homepage'},
+    {name:'riders',icon:'sports_motorsports'},
+    {name:'pricing',icon:'payment'},
   ];
 
   user : User;
@@ -62,10 +70,14 @@ export class SharedServiceService implements OnInit {
     try {
       const response = await axios.get('http://75.119.144.170:300/getUser?userID='+this.cid.userId)
       this.user = await response.data.result[0]
+      if(this.cid.type == 'manager'){
+        this.user.pmail = this.cid.user
+        this.user.status = 'manager'
+      }
       //console.log(this.user);
 
       this.userStatus = await response.data.result[0].status;
-      return response.data.result[0];
+      return this.user;
     } catch(error) {
       //console.log("User GetError");
     }
@@ -77,8 +89,10 @@ export class SharedServiceService implements OnInit {
 
     if(this.userStatus == "admin") {
       return this.Adminmenu;
-    } else {
+    } else if(this.userStatus == 'company') {
       return this.Usermenu;
+    } else {
+      return this.Managermenu;
     }
   }
 
@@ -102,6 +116,20 @@ export class SharedServiceService implements OnInit {
     //console.log(res.data.result);
 
     return res.data.result
+  }
+
+  async addManager(person) {
+    const headers = { 'Content-Type': 'application/json' };
+    return axios.post('http://75.119.144.170:300/insertManager', person, {headers});
+  }
+
+  async getManagerList() {
+    const res = await axios.get('http://75.119.144.170:300/getManager?cid='+this.cid.userId)
+    return res.data.result
+  }
+
+  async deleteManager(email) {
+    return axios.delete('http://75.119.144.170:300/deleteManager?email='+email)
   }
 
   async deleteWhitelist(email) {

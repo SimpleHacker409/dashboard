@@ -21,6 +21,10 @@ import { SignupComponent } from './signup/signup.component';
 import { PlacesComponent } from './places/places.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ManagerComponent } from './manager/manager.component';
+import { AddmanagerComponent } from './manager/addmanager/addmanager.component';
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import {MaterialModule} from './material.module'
@@ -50,7 +54,9 @@ import { AuthService } from './shared/auth.service';
     ModalPopupComponent,
     SignupComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ManagerComponent,
+    AddmanagerComponent
   ],
   imports: [
     BrowserModule,

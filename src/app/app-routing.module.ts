@@ -16,6 +16,8 @@ import { SignupComponent } from './signup/signup.component';
 import { PlacesComponent } from './places/places.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ManagerComponent } from './manager/manager.component';
+
 
 
 const routes: Routes = [
@@ -28,6 +30,7 @@ const routes: Routes = [
         {path: 'riders', component: RidersComponent},
         {path: 'pricing', component: PricingComponent},
         {path: 'bikes', component: BikesComponent},
+        {path: 'manager', component: ManagerComponent},
         {path: 'reports', component: ReportsComponent},
         {path: 'settings', component: SettingsComponent},
         {path: 'places', component: PlacesComponent},

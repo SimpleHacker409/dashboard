@@ -1,0 +1,43 @@
+<h2>Add New Manager</h2>
+<form class="example-form" [formGroup]="addManager" (ngSubmit)="onSubmit(addManager)">
+  <div class="d-flex">
+    <mat-icon class="material-symbols-outlined mr-4">
+      account_circle
+    </mat-icon>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Company</mat-label>
+      <input formControlName="cname" matInput>
+    </mat-form-field>
+  </div>
+
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>First name</mat-label>
+      <input formControlName="mname" matInput>
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lname" matInput>
+    </mat-form-field></td>
+  </tr></table>
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mail</mat-label>
+      <input formControlName="mail" matInput>
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Default Password</mat-label>
+      <input formControlName="pass" matInput>
+    </mat-form-field></td>
+  </tr></table>
+
+<!--   <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Previlage</mat-label>
+      <input formControlName="status" matInput placeholder="Ex. Manager">
+    </mat-form-field>
+  </td>
+  </tr></table> -->
+  <button *ngIf="!isWait" mat-raised-button color="primary" class="mx-2 my-1">Submit</button>
+</form>
+<mat-progress-spinner *ngIf="isWait" mode="indeterminate" diameter="40"></mat-progress-spinner>

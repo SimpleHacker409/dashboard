@@ -17,12 +17,17 @@
             <input type="password" formControlName="password" matInput placeholder="****">
             <mat-icon matPrefix class="mr-2">lock</mat-icon>
           </mat-form-field>
-          <a href="#">Forgot Password ?</a>
+          <div class="d-flex">
+            <a href="#">Forgot Password ?</a>
+            <mat-slide-toggle formControlName="isAdmin" color="primary" class="ml-2">Admin</mat-slide-toggle>
+          </div>
         <button mat-raised-button color="primary" class="w-100 m-3">Login</button>
         <p class="text-success" *ngIf="isLogin">Login Success</p>
         <p class="text-danger" *ngIf="!isLogin && isLogin != null">{{logStatus}}</p>
         </form>
       </div>
+
+
       <div class="bg-pattren p-5 rounded-right overflow-hidden">
         <div class="bg-trans p-4 text-light">
           <h1>Very good works are <br> waiting for you</h1>

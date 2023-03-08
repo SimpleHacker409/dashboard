@@ -52,7 +52,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef class="font-blue"> Name </th>
-      <td mat-cell *matCellDef="let element" class="text-capitalize font-blue font-weight-bold h6"> {{element.email.slice(0, element.email.indexOf('@'))}} </td>
+      <td mat-cell *matCellDef="let element" class="text-capitalize font-blue font-weight-bold h6"><span class="d-flex justify-center"><mat-icon class="mr-2">directions_bike</mat-icon> {{element.email.slice(0, element.email.indexOf('@'))}} </span>  </td>
     </ng-container>
 
     <!-- Weight email -->
