@@ -18,7 +18,7 @@ export class AuthService {
   public async login(user: { username: string, password: string }) {
     const headers = { 'Content-Type': 'application/json' };
     try {
-      const response = await axios.post('http://75.119.144.170:300/login', user, {headers});
+      const response = await axios.post('https://portal.evolvomobility.com:300/login', user, {headers});
       if(await response.data.status == "success") {
 
         this.saveToken(response.data.result[0].domain, response.data.result[0].cid, 'admin')
@@ -40,7 +40,7 @@ export class AuthService {
   public async managerLogin(user: { email: string, pass: string }) {
     const headers = { 'Content-Type': 'application/json' };
     try {
-      const response = await axios.post('http://75.119.144.170:300/Managerlogin', user, {headers});
+      const response = await axios.post('https://portal.evolvomobility.com:300/Managerlogin', user, {headers});
       if(await response.data.status == "success") {
 
         this.saveToken(response.data.result[0].pmail, response.data.result[0].cid, 'manager')

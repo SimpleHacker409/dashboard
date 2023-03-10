@@ -68,7 +68,7 @@ export class SharedServiceService implements OnInit {
 
   async getCurrentUser () {
     try {
-      const response = await axios.get('http://75.119.144.170:300/getUser?userID='+this.cid.userId)
+      const response = await axios.get('https://portal.evolvomobility.com:300/getUser?userID='+this.cid.userId)
       this.user = await response.data.result[0]
       if(this.cid.type == 'manager'){
         this.user.pmail = this.cid.user
@@ -100,7 +100,7 @@ export class SharedServiceService implements OnInit {
     const headers = { 'Content-Type': 'application/json' };
     let data = {"emails": emails,"cid":this.user.cid,"status": "to activate","startdate": startDate, "enddate":endDate}
     try {
-      const response = await axios.post('http://75.119.144.170:300/addWhitelist', data, {headers});
+      const response = await axios.post('https://portal.evolvomobility.com:300/addWhitelist', data, {headers});
       if(await response.data.status == "success") {
         return "Success";
       } else {
@@ -112,7 +112,7 @@ export class SharedServiceService implements OnInit {
     }
   }
   async getWhiteList(){
-    const res = await axios.get('http://75.119.144.170:300/getWhitelist?userID='+this.cid.userId)
+    const res = await axios.get('https://portal.evolvomobility.com:300/getWhitelist?userID='+this.cid.userId)
     //console.log(res.data.result);
 
     return res.data.result
@@ -120,24 +120,24 @@ export class SharedServiceService implements OnInit {
 
   async addManager(person) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.post('http://75.119.144.170:300/insertManager', person, {headers});
+    return axios.post('https://portal.evolvomobility.com:300/insertManager', person, {headers});
   }
 
   async getManagerList() {
-    const res = await axios.get('http://75.119.144.170:300/getManager?cid='+this.cid.userId)
+    const res = await axios.get('https://portal.evolvomobility.com:300/getManager?cid='+this.cid.userId)
     return res.data.result
   }
 
   async deleteManager(email) {
-    return axios.delete('http://75.119.144.170:300/deleteManager?email='+email)
+    return axios.delete('https://portal.evolvomobility.com:300/deleteManager?email='+email)
   }
 
   async deleteWhitelist(email) {
-    return axios.delete('http://75.119.144.170:300/deleteWhitelist?email='+email+'&cid='+this.cid.userId)
+    return axios.delete('https://portal.evolvomobility.com:300/deleteWhitelist?email='+email+'&cid='+this.cid.userId)
   }
 
   async getRentals() {
-    const res = await axios.get('http://75.119.144.170:300/getRentals?cid='+this.user.cid)
+    const res = await axios.get('https://portal.evolvomobility.com:300/getRentals?cid='+this.user.cid)
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     res.data.data.forEach((value) => {
       const tripDate = new Date(value.trip_start);
@@ -152,7 +152,7 @@ export class SharedServiceService implements OnInit {
     const headers = { 'Content-Type': 'application/json' };
     const data = {"cid": this.user.cid,"email":email,"status": statusToChange}
     try {
-      const response = await axios.put('http://75.119.144.170:300/changeWhitelistStatus', data, {headers});
+      const response = await axios.put('https://portal.evolvomobility.com:300/changeWhitelistStatus', data, {headers});
       return response;
     } catch(err) {
       return {status: "error", message: err}
