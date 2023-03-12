@@ -36,6 +36,7 @@ export class SharedServiceService implements OnInit {
     {name:'bikes',icon:'bike_scooter'},
     {name:'riders',icon:'sports_motorsports'},
     {name:'pricing',icon:'payment'},
+    {name:'manager',icon:'manage_accounts'},
     {name:'places',icon:'home_work'},
     {name:'promotions',icon:'wallet'},
     {name:'reports',icon:'report'},
