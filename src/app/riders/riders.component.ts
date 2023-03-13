@@ -13,9 +13,6 @@ export interface PeriodicElement {
   status: string;
   user_id: string;
 }
-export interface Whitelist {
-  email: string;
-}
 
 @Component({
   selector: 'app-riders',
@@ -32,7 +29,7 @@ export class RidersComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  emails: Whitelist[] = [];
+  emails = [];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -84,7 +81,7 @@ export class RidersComponent implements OnInit {
 
     // Add email
     if (value) {
-      this.emails.push({email: value});
+      this.emails.push(value);
       console.log(this.emails);
     }
 
@@ -92,8 +89,8 @@ export class RidersComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-  remove(email: Whitelist): void {
-    const index = this.emails.indexOf(email);
+  remove(value): void {
+    const index = this.emails.indexOf(value);
 
     if (index >= 0) {
       this.emails.splice(index, 1);
