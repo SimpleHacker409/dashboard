@@ -38,6 +38,7 @@ export class BikesComponent implements OnInit {
   ELEMENT_DATA: Bike[]
   durationInSeconds: 5;
   userStatus: string;
+  unlockStatus = 'unlock'
 
   constructor(
     private dialog:MatDialog,
@@ -88,6 +89,17 @@ export class BikesComponent implements OnInit {
         description: desc
       },
       duration: this.durationInSeconds * 1000,
+    })
+  }
+
+  unlockBike(seriel){
+    this.unlockStatus = 'unlocking...'
+    this.service.unlockBike(seriel).then((res) =>{
+      if(res.status == 200){
+        this.unlockStatus = 'unlocked'
+      } else {
+        this.unlockStatus = 'failed'
+      }
     })
   }
 

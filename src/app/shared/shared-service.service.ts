@@ -166,6 +166,11 @@ export class SharedServiceService implements OnInit {
     return axios.delete('https://portal.evolvomobility.com:300/removeBike?id='+id)
   }
 
+  async unlockBike(seriel){
+    const headers = { 'Accept': 'application/json' };
+    return axios.post('https://evolvoiotbridgewebapp.azurewebsites.net/api/v1/unlock-device?deviceId='+seriel)
+  }
+
   async deleteManager(email) {
     return axios.delete('https://portal.evolvomobility.com:300/deleteManager?email='+email)
   }
