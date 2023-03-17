@@ -3,11 +3,11 @@
    <p><u>Homepage > Bikes</u></p>
   </div>
   </mat-card>
-  <div class="w-100 d-flex justify-content-end mb-2 pr-3">
-    <button mat-raised-button color="primary" (click)="openPopup()">Add Bike</button>
+  <div *ngIf="userStatus == 'admin'" class="w-100 d-flex justify-content-end mb-2 pr-3">
+    <button mat-raised-button color="primary" (click)="openPopup('new')">Add Bike</button>
   </div>
   <table mat-table
-       [dataSource]="dataSource" multiTemplateDataRows
+       [dataSource]="ELEMENT_DATA" multiTemplateDataRows
        class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-header-cell *matHeaderCellDef> {{column}} </th>
@@ -15,10 +15,12 @@
       <span
       [ngClass]=
       "{
-        'text-light bg-dark p-1 px-2 rounded-pill font-weight-light': column == 'name',
-        'font-weight-bold': column == 'status',
+        'text-light bg-dark p-1 px-2 rounded-pill font-weight-light': column == 'bike_name',
+        'font-weight-bold': column == 'bike_status',
         'text-danger': element[column] == 'maintainance',
-        'text-success': element[column] == 'available',
+        'text-success': element[column] == 'active',
+        'text-info': element[column] == 'reserved',
+        'text-primary': element[column] == 'available',
         'text-muted': column == 'bike_user',
         'text-capitalize': true
       }"
@@ -46,17 +48,17 @@
             <img src="https://www.bcaa.com/-/media/evo/images/evolve/evolve-bike-png-2.ashx" height="80" loading="lazy">
             <div class="">
               <div class="mb-2 font-weight-bold">
-                Key : {{element.key}} <br>
+                Key : ***** <br>
                 Seriel : {{element.seriel}} <br>
-                Macaddress : {{element.mac_address}}
+                Mac : {{element.mac_address}}
               </div>
             </div>
           </div>
         </div>
         <div class="example-element-description d-flex w-100 align-items-center justify-content-end opacity-2">
           <button mat-raised-button color="primary" class="btn-unlock rounded-pill">Unlock</button>
-          <button mat-stroked-button color="primary" class="rounded-pill mx-3">Edit</button>
-          <button mat-raised-button color="warn" class="rounded-pill">Delete</button>
+          <button mat-stroked-button (click)="openPopup(element)" color="primary" class="rounded-pill mx-3">Edit</button>
+          <button *ngIf="userStatus == 'admin'" mat-raised-button (click)="deleteBike(element.id)" color="warn" class="rounded-pill">Delete</button>
         </div>
       </div>
     </td>

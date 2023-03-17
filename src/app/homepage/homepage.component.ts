@@ -19,5 +19,5 @@ export class HomepageComponent implements OnInit {
       this.dashCard[0].data = this.users;
      })
   }
-
 }
+

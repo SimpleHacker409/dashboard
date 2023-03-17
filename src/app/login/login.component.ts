@@ -28,9 +28,7 @@ export class LoginComponent implements OnInit {
       });
     }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   onSubmit(loginForm) {
     if(this.loginFormGroup.value.isAdmin) {

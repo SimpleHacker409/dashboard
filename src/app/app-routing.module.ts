@@ -10,15 +10,12 @@ import { PricingComponent } from './pricing/pricing.component';
 import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BikesComponent } from './bikes/bikes.component';
-import { BikeComponent } from './bikes/bike/bike.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignupComponent } from './signup/signup.component';
 import { PlacesComponent } from './places/places.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManagerComponent } from './manager/manager.component';
-
-
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent,

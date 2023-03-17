@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BigloadComponent } from '../shared/widgets/load/bigload/bigload.component';
 
 @Component({
   selector: 'app-promotions',

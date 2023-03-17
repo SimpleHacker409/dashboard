@@ -1,20 +1,21 @@
 <div class="d-flex">
   <div>
-    <p class="h5">Add Bike</p>
+    <p class="h5">{{title}}</p>
     <mat-divider></mat-divider>
+    <form [formGroup]="addBike" (ngSubmit)="onAddBikeSubmit()">
       <div class="container">
         <div class="row">
           <p class="p-2">
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
-              <input matInput placeholder="E-Bike-01">
+              <input matInput formControlName="bike_name" placeholder="E-Bike-01">
               <mat-hint>Bike Name</mat-hint>
             </mat-form-field>
           </p>
           <p class="p-2">
             <mat-form-field appearance="outline">
               <mat-label>Seriel</mat-label>
-              <input matInput placeholder="Placeholder">
+              <input formControlName="seriel" matInput placeholder="Placeholder">
               <mat-hint>Bike Seriel</mat-hint>
             </mat-form-field>
           </p>
@@ -23,7 +24,7 @@
           <p class="p-2 w-100">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Mac Address</mat-label>
-              <input matInput placeholder="as:21:fv">
+              <input formControlName="mac_address" matInput placeholder="as:21:fv">
               <mat-hint>Mac Address</mat-hint>
             </mat-form-field>
           </p>
@@ -32,14 +33,14 @@
           <p class="p-2">
             <mat-form-field appearance="outline">
               <mat-label>Key</mat-label>
-              <input matInput placeholder="as125">
+              <input formControlName="evokey" matInput placeholder="as125">
               <mat-hint>Unlock Key</mat-hint>
             </mat-form-field>
           </p>
           <p class="p-2">
             <mat-form-field appearance="outline">
               <mat-label>Price</mat-label>
-              <input matInput placeholder="10">
+              <input formControlName="price" matInput placeholder="10">
               <mat-hint>Price p/h</mat-hint>
             </mat-form-field>
           </p>
@@ -47,15 +48,15 @@
         <div class="row">
             <mat-form-field appearance="outline" class="p-2">
               <mat-label>Company</mat-label>
-              <mat-select [(ngModel)]="selectedCompany" name="company">
-                <mat-option *ngFor="let company of companies" [value]="company.id">
-                  {{company.name}}
+              <mat-select formControlName="cid" name="company">
+                <mat-option *ngFor="let company of companies" [value]="company.cid">
+                  {{company.company_name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="p-2">
               <mat-label>Place</mat-label>
-              <mat-select [(ngModel)]="selectedPlace" name="place">
+              <mat-select formControlName="pid" name="place">
                 <mat-option *ngFor="let place of places" [value]="place.id">
                   {{place.name}}
                 </mat-option>
@@ -65,7 +66,7 @@
         <div class="row">
           <mat-form-field appearance="outline" class="p-2">
             <mat-label>Discount</mat-label>
-            <mat-select [(ngModel)]="selectedDiscount" name="discount">
+            <mat-select formControlName="discount" name="discount">
               <mat-option *ngFor="let discount of discount" [value]="discount.id">
                 {{discount.name}}
               </mat-option>
@@ -73,16 +74,19 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="p-2">
             <mat-label>Status</mat-label>
-            <mat-select [(ngModel)]="selectedStatus" name="status">
-              <mat-option *ngFor="let status of status" [value]="status.id">
-                {{status.name}}
+            <mat-select formControlName="bike_status" name="status">
+              <mat-option *ngFor="let state of status" [disabled]="state == 'available' || state == 'reserved' " [value]="state">
+                {{state}}
               </mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
+        <p class="text-danger">{{error}}</p>
+      <button *ngIf="title == 'Add New Bike'" mat-raised-button color="primary" class="m-2">Submit</button>
+      <button *ngIf="title != 'Add New Bike'" (click)="onUpdateBike()" type="button" mat-raised-button color="primary" class="m-2">Update</button>
+      <button mat-raised-button (click)="this.data.parent.closeDialog()" type="button" color="warn" class="m-2">Cancel</button>
       </div>
-      <button mat-raised-button color="primary" class="m-2">Submit</button>
-      <button mat-raised-button color="warn" class="m-2">Cancel</button>
-    </div>
+    </form>
   </div>
   <img src="https://www.bcaa.com/-/media/evo/images/evolve/evolve-bike-png-2.ashx" height="50" loading="lazy">
 </div>

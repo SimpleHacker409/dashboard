@@ -2,88 +2,23 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatDialog,MatDialogRef,MAT_DIALOG_DATA,MatDialogConfig } from '@angular/material/dialog';
 import { BikeComponent } from './bike/bike.component';
+import { SharedServiceService } from '../shared/shared-service.service';
+import { SnackbarComponent } from '../shared/widgets/snackbar-component/snackbar-component.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-export interface PeriodicElement {
+export interface Bike {
   id: number;
-  name: string;
+  bike_name: string;
   seriel: string;
   mac_address: string;
-  key: string;
-  price: string;
+  evokey: string;
+  price: number;
   cid: string;
   pid: string;
   discount: string;
-  status: string;
+  bike_status: string;
   bike_user: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    id: 1,
-    name: "E-Bike-1",
-    seriel: "EVO0324220001",
-    mac_address: "a2:45:d6",
-    key: "as232",
-    price: "15,5",
-    cid: "Evolvo",
-    pid: "turin",
-    discount: "Chrismas 20%",
-    status: "reserved",
-    bike_user: "maximus.asde@email.com"
-  },
-  {
-    id: 2,
-    name: "E-Bike-2",
-    seriel: "EVO0324220002",
-    mac_address: "a2:45:d6",
-    key: "as232",
-    price: "15,5",
-    cid: "Evolvo",
-    pid: "turin",
-    discount: "Chrismas 20%",
-    status: "maintainance",
-    bike_user: ""
-  },
-  {
-    id: 3,
-    name: "E-Bike-3",
-    seriel: "EVO0324220003",
-    mac_address: "a2:45:d6",
-    key: "as232",
-    price: "15,5",
-    cid: "evolvo",
-    pid: "soave",
-    discount: "chrismas 20%",
-    status: "reserved",
-    bike_user: "maximus.asde@email.com"
-  },
-  {
-    id: 4,
-    name: "E-Bike-4",
-    seriel: "EVO0324220004",
-    mac_address: "a2:45:d6",
-    key: "as232",
-    price: "15,5",
-    cid: "Evolvo",
-    pid: "milan",
-    discount: "Chrismas 20%",
-    status: "available",
-    bike_user: ""
-  },
-  {
-    id: 5,
-    name: "E-Bike-5",
-    seriel: "EVO0324220005",
-    mac_address: "a2:45:d6",
-    key: "as232",
-    price: "15,5",
-    cid: "Evolvo",
-    pid: "turin",
-    discount: "Chrismas 20%",
-    status: "reserved",
-    bike_user: "maximus.asde@email.com"
-  },
-];
 
 @Component({
   selector: 'app-bikes',
@@ -100,22 +35,60 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class BikesComponent implements OnInit {
 
-  animal: string;
-  name: string;
+  ELEMENT_DATA: Bike[]
+  durationInSeconds: 5;
+  userStatus: string;
 
-  constructor(private dialog:MatDialog) {}
+  constructor(
+    private dialog:MatDialog,
+    private service: SharedServiceService,
+    private _snakBar: MatSnackBar) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getBikes();
+    this.userStatus = this.service.userStatus;
+  }
 
-  dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['id', 'name', 'pid', 'status','bike_user'];
+  columnsToDisplay = ['id', 'bike_name', 'pid', 'bike_status','bike_user'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement: PeriodicElement | null;
+  expandedElement: Bike | null;
 
-  openPopup() {
+  getBikes() {
+    this.service.getBikes().then((res)=>{
+      this.ELEMENT_DATA = res.data.result;
+    })
+  }
+
+  openPopup(type) {
        const dialogRef = this.dialog.open(BikeComponent, {
         width: 'fit-content',
+        data: {parent: this, type: type, userStatus: this.userStatus}
        });
+  }
+
+  closeDialog() {
+    this.dialog.closeAll()
+    this.getBikes()
+  }
+  deleteBike(id) {
+    this.service.removeBike(id).then((res) =>{
+      if(res.data.status == 'success') {
+        this.openSnakBar('Bike Removed', 'Successfull')
+        this.getBikes()
+      } else {
+        this.openSnakBar('Bike Removed', 'Failed')
+      }
+    })
+  }
+
+  openSnakBar(title, desc){
+    this._snakBar.openFromComponent(SnackbarComponent,{
+      data: {
+        title: title,
+        description: desc
+      },
+      duration: this.durationInSeconds * 1000,
+    })
   }
 
 }

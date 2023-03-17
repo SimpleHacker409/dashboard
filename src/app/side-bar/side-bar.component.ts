@@ -10,25 +10,15 @@ export class SideBarComponent implements OnInit {
 
   menu : any
   user : User
-  logo: any;
 
   constructor(private service : SharedServiceService) {}
 
   ngOnInit() {
-    this.getUser();
+    this.user = this.service.user;
+    this.getMenu();
    }
-
-  getUser() {
-    this.service.getCurrentUser()
-    .then((res)=>{
-      this.user = res;
-      this.logo = res.logo;
-      this.getMenu()
-    })
-  }
 
   getMenu() {
    this.menu =  this.service.getMenu()
   }
-
 }

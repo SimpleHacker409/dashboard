@@ -4,3 +4,10 @@ mat-card-header {
 .rounded-button {
   border-radius: 20px;
 }
+.hover-overlay:hover {
+  background: linear-gradient(
+        45deg,
+        hsla(168, 85%, 52%, 0.193),
+        hsla(263, 88%, 45%, 0.202) 100%
+      );
+}

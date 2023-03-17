@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import axios from 'axios';
-import { AuthService } from './auth.service';
 
 export interface User {
   id: number;
@@ -27,7 +27,7 @@ export interface User {
 })
 export class SharedServiceService implements OnInit {
 
-  constructor(private auth : AuthService) {}
+  constructor() {}
 
   Adminmenu =
   [
@@ -46,6 +46,7 @@ export class SharedServiceService implements OnInit {
   Usermenu =
   [
     {name:'homepage',icon:'homepage'},
+    {name:'bikes',icon:'bike_scooter'},
     {name:'riders',icon:'sports_motorsports'},
     {name:'pricing',icon:'payment'},
     {name:'manager',icon:'manage_accounts'},
@@ -62,15 +63,16 @@ export class SharedServiceService implements OnInit {
   userStatus : string;
   cid = JSON.parse(localStorage.getItem('userToken'))
 
-  ngOnInit() {
-    this.getCurrentUser()
-    console.log("Shared Service");
-  }
+  ngOnInit() {}
 
+/*   delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  } */
   async getCurrentUser () {
     try {
       const response = await axios.get('https://portal.evolvomobility.com:300/getUser?userID='+this.cid.userId)
       this.user = await response.data.result[0]
+      //await this.delay(1000);
       if(this.cid.type == 'manager'){
         this.user.pmail = this.cid.user
         this.user.status = 'manager'
@@ -79,12 +81,12 @@ export class SharedServiceService implements OnInit {
 
       this.userStatus = await response.data.result[0].status;
       return this.user;
+
     } catch(error) {
-      //console.log("User GetError");
+      console.log("User GetError");
     }
     //this.user = await axios.get('/getUser?='+cid.userId)
   }
-
   getMenu() {
     //console.log(this.userStatus);
 
@@ -113,7 +115,7 @@ export class SharedServiceService implements OnInit {
     }
   }
   async getWhiteList(){
-    const res = await axios.get('https://portal.evolvomobility.com:300/getWhitelist?userID='+this.cid.userId)
+    const res = await axios.get('https://portal.evolvomobility.com:300/getWhitelist?userID='+this.user.cid)
     //console.log(res.data.result);
 
     return res.data.result
@@ -124,9 +126,43 @@ export class SharedServiceService implements OnInit {
     return axios.post('https://portal.evolvomobility.com:300/insertManager', person, {headers});
   }
 
+  async addPricelist(price) {
+    const headers = { 'Content-Type': 'application/json' };
+    return axios.post('https://portal.evolvomobility.com:300/insertPrice', price, {headers});
+  }
+  async updatePrice(price) {
+    const headers = { 'Content-Type': 'application/json' };
+    return axios.put('https://portal.evolvomobility.com:300/updatePrice', price, {headers});
+  }
+  async deletePrice(id) {
+    return axios.delete('https://portal.evolvomobility.com:300/deletePrice?id='+id)
+  }
+  async getPricelist() {
+    return axios.get('https://portal.evolvomobility.com:300/getPricelist?cid='+this.user.cid);
+  }
+
   async getManagerList() {
-    const res = await axios.get('https://portal.evolvomobility.com:300/getManager?cid='+this.cid.userId)
+    const res = await axios.get('https://portal.evolvomobility.com:300/getManager?cid='+this.user.cid)
     return res.data.result
+  }
+  async getCompanies() {
+    return axios.get('https://portal.evolvomobility.com:300/getCompanies');
+  }
+
+  async insertBike(bike) {
+    const headers = { 'Content-Type': 'application/json' };
+    return axios.post('https://portal.evolvomobility.com:300/insertBike', bike, {headers})
+  }
+  async getBikes(){
+    return axios.get('https://portal.evolvomobility.com:300/getBike?cid='+this.user.cid+'&aid=c100')
+  }
+  async updateBike(bike) {
+    const headers = { 'Content-Type': 'application/json' };
+    return axios.put('https://portal.evolvomobility.com:300/updateBike', bike, {headers})
+  }
+
+  async removeBike(id){
+    return axios.delete('https://portal.evolvomobility.com:300/removeBike?id='+id)
   }
 
   async deleteManager(email) {
@@ -134,7 +170,7 @@ export class SharedServiceService implements OnInit {
   }
 
   async deleteWhitelist(email) {
-    return axios.delete('https://portal.evolvomobility.com:300/deleteWhitelist?email='+email+'&cid='+this.cid.userId)
+    return axios.delete('https://portal.evolvomobility.com:300/deleteWhitelist?email='+email+'&cid='+this.user.cid)
   }
 
   async getRentals() {

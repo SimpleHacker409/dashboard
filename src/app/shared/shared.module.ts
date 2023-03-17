@@ -13,6 +13,7 @@ import { BarChartComponent } from './widgets/bar-chart/bar-chart.component';
 import { TableComponentComponent } from './widgets/table-component/table-component.component';
 import { DashCardsComponent } from './widgets/dash-cards/dash-cards.component';
 import { SnackbarComponent } from './widgets/snackbar-component/snackbar-component.component';
+import { BigloadComponent } from './widgets/load/bigload/bigload.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SnackbarComponent } from './widgets/snackbar-component/snackbar-compone
     BarChartComponent,
     TableComponentComponent,
     DashCardsComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    BigloadComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { SnackbarComponent } from './widgets/snackbar-component/snackbar-compone
     VariableRadiusComponent,
     BarChartComponent,
     TableComponentComponent,
-    DashCardsComponent
+    DashCardsComponent,
+    BigloadComponent
   ],
   providers: [
     SharedServiceService
