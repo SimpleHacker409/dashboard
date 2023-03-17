@@ -55,6 +55,7 @@ export class SharedServiceService implements OnInit {
   Managermenu =
   [
     {name:'homepage',icon:'homepage'},
+    {name:'bikes',icon:'bike_scooter'},
     {name:'riders',icon:'sports_motorsports'},
     {name:'pricing',icon:'payment'},
   ];
