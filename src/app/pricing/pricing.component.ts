@@ -51,7 +51,6 @@ export class PricingComponent implements OnInit {
   getPriceList() {
     this.service.getPricelist().then((res) =>{
       this.priceList = res.data.result;
-      console.log(this.priceList);
     })
   }
   addPriceList(){

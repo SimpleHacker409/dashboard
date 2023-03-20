@@ -37,6 +37,7 @@
       <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
     </mat-form-field>
   </div>
+  <p class="text-danger">{{error}}</p>
   <button mat-raised-button color="primary" (click)="addUsers()">Submit</button>
 </mat-card>
 <!--Email List Card-->

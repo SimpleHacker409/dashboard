@@ -38,6 +38,7 @@ export class RidersComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   data = [];
+  error: string;
 
   constructor(
     private service: SharedServiceService,
@@ -82,7 +83,6 @@ export class RidersComponent implements OnInit {
     // Add email
     if (value) {
       this.emails.push(value);
-      console.log(this.emails);
     }
 
     // Clear the input value
@@ -98,19 +98,23 @@ export class RidersComponent implements OnInit {
     }
   }
   async addUsers() {
-    console.log("Adduser");
-
-    const startDate = this.dateFormat(this.range.value.start)
-    const endDate = this.dateFormat(this.range.value.end)
-    const response = await this.service.addWhiteList(this.emails, startDate, endDate)
-    if(response == "Success") {
-      this.emails.splice(0, this.emails.length)
-      this.range.reset();
-      this.openSnackBar("WhiteList Updated Sucessfully", "Alert email sent to the users")
-    } else {
-      this.openSnackBar("WhiteList Updated Failed", "Please try again with proper format")
+    if(this.emails.length == 0){
+      this.error = 'Empty Form!'
+    } else{
+      this.error = null;
+      const startDate = this.dateFormat(this.range.value.start)
+      const endDate = this.dateFormat(this.range.value.end)
+      const response = await this.service.addWhiteList(this.emails, startDate, endDate)
+      if(response == "Success") {
+        this.emails.splice(0, this.emails.length)
+        this.range.reset();
+        this.openSnackBar("WhiteList Updated Sucessfully", "Alert email sent to the users")
+      } else {
+        this.openSnackBar("WhiteList Updated Failed", "Please try again with proper format")
+      }
+      this.loadUserData()
     }
-    this.loadUserData()
+
   }
   async deleteRider(email) {
     const res = await this.service.deleteWhitelist(email)

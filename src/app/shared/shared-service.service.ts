@@ -62,9 +62,10 @@ export class SharedServiceService implements OnInit {
 
   user : User;
   userStatus : string;
-  cid = JSON.parse(localStorage.getItem('userToken'))
 
   ngOnInit() {}
+  cid = JSON.parse(localStorage.getItem('userToken'))
+
 
 /*   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -84,7 +85,7 @@ export class SharedServiceService implements OnInit {
       return this.user;
 
     } catch(error) {
-      console.log("User GetError");
+      //console.log(error);
     }
     //this.user = await axios.get('/getUser?='+cid.userId)
   }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { Observable, Subject } from 'rxjs';
+import { SharedServiceService } from './shared-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class AuthService {
   user : any;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private service : SharedServiceService
   ) {
     this.checkUserLoggedIn()
    }
@@ -22,10 +25,11 @@ export class AuthService {
       if(await response.data.status == "success") {
 
         this.saveToken(response.data.result[0].domain, response.data.result[0].cid, 'admin')
-        this.router.navigate(['/dashboard'])
-        .then(() => {
-          window.location.reload();
-        });
+
+        this.router.navigate(['/dashboard']).then(()=>{
+          window.location.reload()
+        })
+        //window.location.reload();
         return "Success";
       } else {
         return "Login Failed";
@@ -44,6 +48,7 @@ export class AuthService {
       if(await response.data.status == "success") {
 
         this.saveToken(response.data.result[0].pmail, response.data.result[0].cid, 'manager')
+
         this.router.navigate(['/dashboard'])
         .then(() => {
           window.location.reload();
@@ -82,8 +87,6 @@ export class AuthService {
 
   private saveToken(user, userId, type) {
     let loginSession = {user: user, userId, type}
-    console.log(loginSession);
-
     localStorage.setItem('userToken',JSON.stringify(loginSession))
   }
   private removeToken() {
