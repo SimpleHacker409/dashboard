@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, from,forkJoin } from 'rxjs';
+import { map, switchMap,mergeMap } from 'rxjs/operators';
 import axios from 'axios';
 
 export interface User {
@@ -21,7 +22,8 @@ export interface User {
   pass: string,
   logo: string
 }
-
+const URL = 'https://portal.evolvomobility.com:300/'
+const BackenURL = 'https://backofficeapi.evolvomobility.com/'
 @Injectable({
   providedIn: 'root'
 })
@@ -46,6 +48,7 @@ export class SharedServiceService implements OnInit {
   Usermenu =
   [
     {name:'homepage',icon:'homepage'},
+    {name:'bookings',icon:'bookings'},
     {name:'bikes',icon:'bike_scooter'},
     {name:'riders',icon:'sports_motorsports'},
     {name:'pricing',icon:'payment'},
@@ -72,7 +75,7 @@ export class SharedServiceService implements OnInit {
   } */
   async getCurrentUser () {
     try {
-      const response = await axios.get('https://portal.evolvomobility.com:300/getUser?userID='+this.cid.userId)
+      const response = await axios.get(URL+'getUser?userID='+this.cid.userId)
       this.user = await response.data.result[0]
       //await this.delay(1000);
       if(this.cid.type == 'manager'){
@@ -105,7 +108,7 @@ export class SharedServiceService implements OnInit {
     const headers = { 'Content-Type': 'application/json' };
     let data = {"emails": emails,"cid":this.user.cid,"status": "to activate","startdate": startDate, "enddate":endDate}
     try {
-      const response = await axios.post('https://portal.evolvomobility.com:300/addWhitelist', data, {headers});
+      const response = await axios.post(URL+'addWhitelist', data, {headers});
       if(await response.data.status == "success") {
         return "Success";
       } else {
@@ -117,7 +120,7 @@ export class SharedServiceService implements OnInit {
     }
   }
   async getWhiteList(){
-    const res = await axios.get('https://portal.evolvomobility.com:300/getWhitelist?userID='+this.user.cid)
+    const res = await axios.get(URL+'getWhitelist?userID='+this.user.cid)
     //console.log(res.data.result);
 
     return res.data.result
@@ -125,46 +128,46 @@ export class SharedServiceService implements OnInit {
 
   async addManager(person) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.post('https://portal.evolvomobility.com:300/insertManager', person, {headers});
+    return axios.post(URL+'insertManager', person, {headers});
   }
 
   async addPricelist(price) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.post('https://portal.evolvomobility.com:300/insertPrice', price, {headers});
+    return axios.post(URL+'insertPrice', price, {headers});
   }
   async updatePrice(price) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.put('https://portal.evolvomobility.com:300/updatePrice', price, {headers});
+    return axios.put(URL+'updatePrice', price, {headers});
   }
   async deletePrice(id) {
-    return axios.delete('https://portal.evolvomobility.com:300/deletePrice?id='+id)
+    return axios.delete(URL+'deletePrice?id='+id)
   }
   async getPricelist() {
-    return axios.get('https://portal.evolvomobility.com:300/getPricelist?cid='+this.user.cid);
+    return axios.get(URL+'getPricelist?cid='+this.user.cid);
   }
 
   async getManagerList() {
-    const res = await axios.get('https://portal.evolvomobility.com:300/getManager?cid='+this.user.cid)
+    const res = await axios.get(URL+'getManager?cid='+this.user.cid)
     return res.data.result
   }
   async getCompanies() {
-    return axios.get('https://portal.evolvomobility.com:300/getCompanies');
+    return axios.get(URL+'getCompanies');
   }
 
   async insertBike(bike) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.post('https://portal.evolvomobility.com:300/insertBike', bike, {headers})
+    return axios.post(URL+'insertBike', bike, {headers})
   }
   async getBikes(){
-    return axios.get('https://portal.evolvomobility.com:300/getBike?cid='+this.user.cid+'&aid=c100')
+    return axios.get(URL+'getBike?cid='+this.user.cid+'&aid=c100')
   }
   async updateBike(bike) {
     const headers = { 'Content-Type': 'application/json' };
-    return axios.put('https://portal.evolvomobility.com:300/updateBike', bike, {headers})
+    return axios.put(URL+'updateBike', bike, {headers})
   }
 
   async removeBike(id){
-    return axios.delete('https://portal.evolvomobility.com:300/removeBike?id='+id)
+    return axios.delete(URL+'removeBike?id='+id)
   }
 
   async unlockBike(seriel){
@@ -173,15 +176,15 @@ export class SharedServiceService implements OnInit {
   }
 
   async deleteManager(email) {
-    return axios.delete('https://portal.evolvomobility.com:300/deleteManager?email='+email)
+    return axios.delete(URL+'deleteManager?email='+email)
   }
 
   async deleteWhitelist(email) {
-    return axios.delete('https://portal.evolvomobility.com:300/deleteWhitelist?email='+email+'&cid='+this.user.cid)
+    return axios.delete(URL+'deleteWhitelist?email='+email+'&cid='+this.user.cid)
   }
 
   async getRentals() {
-    const res = await axios.get('https://portal.evolvomobility.com:300/getRentals?cid='+this.user.cid)
+    const res = await axios.get(URL+'getRentals?cid='+this.user.cid)
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     res.data.data.forEach((value) => {
       const tripDate = new Date(value.trip_start);
@@ -196,7 +199,7 @@ export class SharedServiceService implements OnInit {
     const headers = { 'Content-Type': 'application/json' };
     const data = {"cid": this.user.cid,"email":email,"status": statusToChange}
     try {
-      const response = await axios.put('https://portal.evolvomobility.com:300/changeWhitelistStatus', data, {headers});
+      const response = await axios.put(URL+'changeWhitelistStatus', data, {headers});
       return response;
     } catch(err) {
       return {status: "error", message: err}
@@ -236,26 +239,24 @@ export class SharedServiceService implements OnInit {
     ];
     return logData;
   }
-  getBookings() {
-    var bookings = [
-      {day: 'Monday',date: '27/01/2023', status: "Active", schedule: '1h:30m', email: 'maximowe@mail.com', price: '12,20'},
-      {day: 'Sunday',date: '12/01/2023', status: "Canceled", schedule: '0h:40m', email: 'marvel12@mail.com', price: '10,50'},
-      {day: 'Wednesday',date: '21/01/2023', status: "Active", schedule: '0h:25m', email: 'chiminonos@mail.com', price: '6,00'},
-      {day: 'Monday',date: '04/01/2023', status: "Waiting", schedule: '1h:40m', email: 'miurads445@mail.com', price: '13,30'},
-      {day: 'Monday',date: '18/01/2023', status: "Active", schedule: '4h:30m', email: 'arusinbs98@mail.com', price: '26,23'},
-      {day: 'Tuesday',date: '25/01/2023', status: "Scheduled", schedule: '8h:00m', email: 'maximowe@mail.com', price: '40,60'},
-      {day: 'Sunday',date: '03/01/2023', status: "Active", schedule: '1h:00m', email: 'maximowe@mail.com', price: '11,00'},
-      {day: 'Monday',date: '27/01/2023', status: "Active", schedule: '6h:10m', email: 'maximowe@mail.com', price: '32,22'},
-      {day: 'Monday',date: '27/01/2023', status: "Active", schedule: '1h:30m', email: 'maximowe@mail.com', price: '12,20'},
-      {day: 'Sunday',date: '12/01/2023', status: "Canceled", schedule: '0h:40m', email: 'marvel12@mail.com', price: '10,50'},
-      {day: 'Wednesday',date: '21/01/2023', status: "Active", schedule: '0h:25m', email: 'chiminonos@mail.com', price: '6,00'},
-      {day: 'Monday',date: '04/01/2023', status: "Waiting", schedule: '1h:40m', email: 'miurads445@mail.com', price: '13,30'},
-      {day: 'Monday',date: '18/01/2023', status: "Active", schedule: '4h:30m', email: 'arusinbs98@mail.com', price: '26,23'},
-      {day: 'Tuesday',date: '25/01/2023', status: "Scheduled", schedule: '8h:00m', email: 'maximowe@mail.com', price: '40,60'},
-      {day: 'Sunday',date: '03/01/2023', status: "Active", schedule: '1h:00m', email: 'maximowe@mail.com', price: '11,00'},
-      {day: 'Monday',date: '27/01/2023', status: "Active", schedule: '6h:10m', email: 'maximowe@mail.com', price: '32,22'},
-    ];
-    return bookings;
+  getBookings(): Observable<any[]>{
+    return from(this.getBookingsFunction()).pipe(
+      mergeMap((pid: any[]) => {
+        const apiCalls = pid.map((place) => axios.get('https://backofficeapi.evolvomobility.com/get_bookings_filtered?facilityID='+place.pid+'&startDate=2020-02-10&endDate=2023-03-27') )
+        return forkJoin(apiCalls)
+      }),
+      map((results:any[]) => {
+        return results.reduce((acc, curr) => acc.concat(curr),[])
+      })
+    )
+  }
+
+  async getBookingsFunction(){
+
+    //Get places of the company
+    const place_res = await axios.get(URL+'getPlace')
+    const pid = place_res.data.result.filter(item => item.cid == this.user.cid)
+    return pid
   }
 
 }

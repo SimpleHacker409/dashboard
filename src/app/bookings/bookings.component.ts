@@ -6,11 +6,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 export interface UserData {
-  day: string;
   date: string;
   status: string;
   schedule: string;
-  email: string;
+  name: string;
   price: string;
 }
 
@@ -20,6 +19,8 @@ export interface UserData {
   styleUrls: ['./bookings.component.scss']
 })
 export class BookingsComponent implements AfterViewInit {
+
+  isLoading: boolean;
 
   range = new FormGroup({
     start: new FormControl(null, Validators.required),
@@ -31,10 +32,15 @@ export class BookingsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['day', 'status', 'schedule', 'email', 'price'];
+  displayedColumns: string[] = ['date', 'status', 'schedule', 'name', 'price'];
 
   constructor(private sharedService: SharedServiceService,) {
-    this.dataSource = new MatTableDataSource(this.sharedService.getBookings());
+    this.isLoading = true;
+    this.sharedService.getBookings().subscribe((res) => {
+        this.isLoading = false
+        this.dataSource = new MatTableDataSource(res[0].data.result.reverse())
+      }
+    )
   }
 
   ngAfterViewInit() {
