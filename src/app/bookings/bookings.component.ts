@@ -35,18 +35,18 @@ export class BookingsComponent implements AfterViewInit {
   displayedColumns: string[] = ['date', 'status', 'schedule', 'name', 'price'];
 
   constructor(private sharedService: SharedServiceService,) {
+    this.dataSource = new MatTableDataSource()
     this.isLoading = true;
     this.sharedService.getBookings().subscribe((res) => {
         this.isLoading = false
         this.dataSource = new MatTableDataSource(res[0].data.result.reverse())
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     )
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

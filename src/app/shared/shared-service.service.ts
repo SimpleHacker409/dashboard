@@ -240,9 +240,10 @@ export class SharedServiceService implements OnInit {
     return logData;
   }
   getBookings(): Observable<any[]>{
+    const date = new Date()
     return from(this.getBookingsFunction()).pipe(
       mergeMap((pid: any[]) => {
-        const apiCalls = pid.map((place) => axios.get('https://backofficeapi.evolvomobility.com/get_bookings_filtered?facilityID='+place.pid+'&startDate=2020-02-10&endDate=2023-03-27') )
+        const apiCalls = pid.map((place) => axios.get('https://backofficeapi.evolvomobility.com/get_bookings_filtered?facilityID='+place.pid+'&startDate=2020-02-10&endDate='+date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,"0")+'-'+date.getDate()) )
         return forkJoin(apiCalls)
       }),
       map((results:any[]) => {
