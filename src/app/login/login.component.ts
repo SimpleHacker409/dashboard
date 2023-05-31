@@ -9,8 +9,6 @@ import { AuthService } from '../shared/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-
-
   isLogin : boolean;
   logStatus : string;
   isAdmin : boolean;

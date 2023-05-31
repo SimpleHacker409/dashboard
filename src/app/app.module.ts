@@ -29,6 +29,7 @@ import {MaterialModule} from './material.module'
 import { SharedModule } from './shared/shared.module';
 import { SharedServiceService } from './shared/shared-service.service';
 import { AuthService } from './shared/auth.service';
+import { ActivateUserComponent } from './activate-user/activate-user.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AuthService } from './shared/auth.service';
     DashboardComponent,
     ManagerComponent,
     AddmanagerComponent,
-    AddpriceComponent
+    AddpriceComponent,
+    ActivateUserComponent
   ],
   imports: [
     BrowserModule,

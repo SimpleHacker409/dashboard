@@ -16,6 +16,7 @@ import { PlacesComponent } from './places/places.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManagerComponent } from './manager/manager.component';
+import { ActivateUserComponent } from './activate-user/activate-user.component';
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent,
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path: '', redirectTo: '/dashboard/homepage', pathMatch: 'full'},
       {path: 'signup', component: SignupComponent},
       {path: 'login', component: LoginComponent},
+      {path:'activateUser',component: ActivateUserComponent},
       {path: '**', component: PageNotFoundComponent,}
 ];
 
