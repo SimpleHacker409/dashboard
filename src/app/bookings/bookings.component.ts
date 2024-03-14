@@ -33,17 +33,38 @@ export class BookingsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ['date', 'status', 'schedule', 'name', 'price'];
-
+  displayedColumnsNew: string[]=['trip_start', 'trip_end','reservation_status', 'mail','bike_name']
   constructor(private sharedService: SharedServiceService,) {
-    this.dataSource = new MatTableDataSource()
+/*     this.dataSource = new MatTableDataSource()
     this.isLoading = true;
     this.sharedService.getBookings().subscribe((res) => {
         this.isLoading = false
         this.dataSource = new MatTableDataSource(res[0].data.result.reverse())
+        console.log(this.dataSource);
+        
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-    )
+    ) */
+    this.dataSource = new MatTableDataSource()
+    this.isLoading = true;
+    this.loadRentals()
+    
+  }
+
+  async loadRentals(){
+    try{
+      const reservations = await this.sharedService.getCompanyRentals()
+      this.dataSource = new MatTableDataSource(reservations.data.data)
+      console.log(this.dataSource);
+      
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.isLoading = false
+    } catch(err) {
+      console.log("Error loading Rentals",err);
+    }
+    
   }
 
   ngAfterViewInit() {}
@@ -55,6 +76,10 @@ export class BookingsComponent implements AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  dateFormat(date){
+    return this.sharedService.formatDate(new Date(date), 'MM/dd HH:mm')
   }
 
 }

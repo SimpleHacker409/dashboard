@@ -2,6 +2,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, from,forkJoin } from 'rxjs';
 import { map, switchMap,mergeMap } from 'rxjs/operators';
 import axios from 'axios';
+// @ts-ignore
+import {format} from 'date-fns'
 
 export interface User {
   id: number;
@@ -170,9 +172,15 @@ export class SharedServiceService implements OnInit {
     return axios.delete(URL+'removeBike?id='+id)
   }
 
-  async unlockBike(seriel){
-    const headers = { 'Accept': 'application/json' };
-    return axios.post('https://evolvoiotbridgewebapp.azurewebsites.net/api/v1/unlock-device?deviceId='+seriel)
+  async unlockBike(device_id,unlocKey){
+    try{
+      const body = {key:unlocKey}
+      const res = await axios.post('https://apievolvo.azurewebsites.net/api/unlock?device_id='+device_id,body)
+      return 200
+    }catch(err)
+    {
+      return 500
+    }
   }
 
   async deleteManager(email) {
@@ -185,6 +193,7 @@ export class SharedServiceService implements OnInit {
 
   async getRentals() {
     const res = await axios.get(URL+'getRentals?cid='+this.user.cid)
+
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     res.data.data.forEach((value) => {
       const tripDate = new Date(value.trip_start);
@@ -193,6 +202,10 @@ export class SharedServiceService implements OnInit {
       //console.log(data);
       })
     return data;
+  }
+
+  async getCompanyRentals(){
+    return await axios.get(URL+'getRentals?cid='+this.user.cid)
   }
 
   async changeWhiteListStatus(email, statusToChange) {
@@ -258,6 +271,10 @@ export class SharedServiceService implements OnInit {
     const place_res = await axios.get(URL+'getPlace')
     const pid = place_res.data.result.filter(item => item.cid == this.user.cid)
     return pid
+  }
+
+  formatDate(date, formatdate){
+    return format(date, formatdate)
   }
 
 }

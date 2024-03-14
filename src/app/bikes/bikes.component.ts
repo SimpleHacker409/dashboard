@@ -57,6 +57,8 @@ export class BikesComponent implements OnInit {
   getBikes() {
     this.service.getBikes().then((res)=>{
       this.ELEMENT_DATA = res.data.result;
+      console.log(res.data);
+      
     })
   }
 
@@ -92,15 +94,16 @@ export class BikesComponent implements OnInit {
     })
   }
 
-  unlockBike(seriel){
+  async unlockBike(device_id,evokey){
     this.unlockStatus = 'unlocking...'
-    this.service.unlockBike(seriel).then((res) =>{
-      if(res.status == 200){
-        this.unlockStatus = 'unlocked'
-      } else {
-        this.unlockStatus = 'failed'
-      }
-    })
+    const unlockRes = await this.service.unlockBike(device_id,evokey)
+    console.log(unlockRes);
+    if(unlockRes == 200) this.unlockStatus = 'unlocked'
+    else this.unlockStatus = 'failed'
+
+    setTimeout(()=>{
+      this.unlockStatus = 'unlock'
+    },2000)
   }
 
 }
