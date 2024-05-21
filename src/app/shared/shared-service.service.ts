@@ -183,6 +183,15 @@ export class SharedServiceService implements OnInit {
     }
   }
 
+  async getBikeinfo(device_id){
+    try{
+      const res = await axios.get('https://apievolvo.azurewebsites.net/api/getstatus?device_id='+device_id)
+      return res.data;
+    }catch(err){
+      return 500;
+    }
+  }
+
   async deleteManager(email) {
     return axios.delete(URL+'deleteManager?email='+email)
   }

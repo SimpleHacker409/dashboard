@@ -8,4 +8,7 @@ export const environment = {
     appId: "1:821921832634:web:1ffcd895bd6fdb32772c83"
   },
   production: false,
+  mapbox: {
+    accessToken:'pk.eyJ1IjoibWFnaWM0MDkiLCJhIjoiY2xmbWw2eHp2MGQ1cTNwcnZsb2ZqeWdmaiJ9.h7BcK63Zh4pR8yqYPoVxlg'
+  }
 };
