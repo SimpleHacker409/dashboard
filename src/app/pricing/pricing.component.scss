@@ -11,3 +11,18 @@ mat-card-header {
         hsla(263, 88%, 45%, 0.202) 100%
       );
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  text-align: left;
+  padding: 12px 7px;
+}
+
+td{
+  border-top: 1px solid #dddddd;
+}
