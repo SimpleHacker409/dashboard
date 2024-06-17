@@ -1,0 +1,56 @@
+table {
+  width: 100%;
+  box-shadow: none !important;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+mat-card {
+  height: fit-content;
+}
+
+.status-text {
+  font-size: smaller;
+}
+
+.bg-success, .bg-danger, .bg-info, .bg-warning {
+  opacity: 0.8;
+}
+
+mat-card-header {
+  padding-top: 8px;
+  color: white;
+  background-color: #9a69ef;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.match-parent{
+  width: 100%;
+  height: 700px;
+}
+
+mat-slide-toggle{
+  background-color: #c5deff;
+  border-radius: 2rem;
+  padding: 0 10px 0 10px;
+}
+.mat-slide-toggle-content{
+  font-weight: 500;
+}
+
+/* mat-spinner {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.mat-progress-spinner circle {
+  width: 50px !important;
+  height: 50px !important;
+} */

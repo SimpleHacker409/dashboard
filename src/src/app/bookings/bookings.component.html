@@ -1,0 +1,118 @@
+<!-- //*************NEW **********// -->
+<mat-card class="example-card w-100">
+  <div>
+    <p><u>Homepage > Bookings</u></p>
+  </div>
+</mat-card>
+<div class="d-flex flex-column flex-lg-row mt-2">
+  <mat-card class="col-12 col-lg-8 mr-1">
+    <mat-tab-group focusTab=1 (focusChange)="selectedEventChange($event)">
+      <mat-tab label="Reservation">
+          <mat-form-field appearance="outline">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-spinner *ngIf="isLoading"></mat-spinner>
+        <div class="mat-elevation-z8 shadow-none">
+          <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="trip_start">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> From </th>
+              <td mat-cell *matCellDef="let row"> <span class="h6">{{dateFormat(row.trip_start)}}</span></td>
+            </ng-container>
+
+            <ng-container matColumnDef="trip_end">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> To </th>
+              <td mat-cell *matCellDef="let row"> <span class="h6">{{dateFormat(row.trip_end)}}</span></td>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="reservation_status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="p-1 status-text rounded text-light "
+                [ngClass]=
+                "{
+                  'bg-success': row.reservation_status == 'active',
+                  'bg-warning': row.reservation_status == 'completed'
+                }"
+                >{{row.reservation_status}}</span>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="mail">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+              <td mat-cell *matCellDef="let row" class="h6"> {{row.mail}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="bike_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Bike </th>
+              <td mat-cell *matCellDef="let row"> {{row.bike_name}} </td>
+            </ng-container>
+
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="distance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Distance </th>
+              <td mat-cell *matCellDef="let row"> {{row.trip_distance}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsNew"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsNew"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+      </mat-tab>
+      <mat-tab label="Tracking" #tracking>
+        <div class="d-flex justify-content-center align-items-center">
+          <div *ngIf="(isMapLoading && !loadingMapError) || loadingMapError" class="d-flex ml-auto">
+            <mat-spinner *ngIf="isMapLoading && !loadingMapError" [diameter]="30"></mat-spinner>
+            <p *ngIf="loadingMapError" class="text-danger">Problem : {{loadingMapError}}</p>
+          </div>
+          <mat-slide-toggle (change)="updateLiveMapData($event.checked)" color="primary" class="ml-auto">Watch live track</mat-slide-toggle>
+        </div>
+        <div class="map" id="map" class="match-parent"></div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card>
+
+  <mat-card class="col-12 col-lg-4 p-0">
+    <mat-card-header>
+      <mat-card-title class="font-weight-light">Filter</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+      <button mat-stroked-button (click)="applyDateFilter()" color="primary" class="shadow-sm m-2">Submit</button>
+    </mat-card-content>
+
+<!--     <div class="d-flex justify-content-around">
+      <p>from: {{range.value.start | json}}</p>
+      <p>to: {{range.value.end | json}}</p>
+    </div> -->
+
+  </mat-card>
+</div>

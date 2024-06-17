@@ -1,0 +1,28 @@
+mat-card-header {
+  background-color: none !important;
+}
+.rounded-button {
+  border-radius: 20px;
+}
+.hover-overlay:hover {
+  background: linear-gradient(
+        45deg,
+        hsla(168, 85%, 52%, 0.193),
+        hsla(263, 88%, 45%, 0.202) 100%
+      );
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  text-align: left;
+  padding: 12px 7px;
+}
+
+td{
+  border-top: 1px solid #dddddd;
+}

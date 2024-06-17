@@ -1,0 +1,33 @@
+<div class="d-flex flex-column h-100 justify-content-between">
+  <mat-nav-list class="side-menu mat-black">
+    <img class="mx-auto mt-4 d-block rounded-circle cover border border-secondary" style="width: 7em; height:7em; object-fit: cover;" src={{user.logo}} alt="">
+
+    <div class="profile-card text-center my-3">
+      <h1 class="font-weight-normal mb-0" *ngIf="user && user.company_name">{{user.company_name}}</h1>
+      <h4 class="font-weight-normal" *ngIf="user && user.pmail">{{user.pmail}}</h4>
+    </div>
+    <mat-divider></mat-divider>
+  <div *ngFor="let item of menu; index as i;">
+    <a class="text-capitalize text-decoration-none" mat-list-item routerLinkActive="list-item-active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/dashboard',item.name]">
+      <mat-icon class="mx-2 mat-black">{{item.icon}}</mat-icon>
+      {{item.name}}</a>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <p class="pt-2 pl-4">More...</p>
+
+  <mat-divider></mat-divider>
+<!--   <a class="text-capitalize text-decoration-none" mat-list-item routerLinkActive="list-item-active" [routerLinkActiveOptions]="{exact: true}" routerLink="/contact">
+    <mat-icon class="mx-2 mat-black">contact_support</mat-icon>
+    Contact Support</a> -->
+
+
+  </mat-nav-list>
+  <div class="d-flex justify-content-center align-items-end mt-5">
+    <div class="text-center m-0">
+      <p class="m-0">All rights reserved 2022</p>
+      <p>Evolvo Srl (v1.0)</p>
+    </div>
+  </div>
+</div>
