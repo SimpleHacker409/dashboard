@@ -15,6 +15,12 @@
         <mat-hint>The Price is Per/Hour</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="outline" class="m-2">
+        <mat-label>Unlock Fees</mat-label>
+        <input matInput type="number" formControlName="unlock_fees" placeholder="00.0 Per/Trip" required>
+        <mat-icon matSuffix>euro</mat-icon>
+        <mat-hint>The Price is Per/Trip</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="m-2">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" [value]="status">
           <mat-option *ngFor="let state of status" [value]="state">{{state}}</mat-option>
@@ -23,6 +29,6 @@
     </div>
     <p *ngIf="error" class="text-danger">{{error}}!</p>
     <button mat-raised-button color="primary" class="mr-1">Submit</button>
-    <button *ngIf="state" type="button" mat-raised-button color="warn" (click)="deletePrice()">Delete</button>
+    <button *ngIf="state" type="button" mat-raised-button color="warn" (click)="deletePrice()">Cancel</button>
   </form>
 </div>

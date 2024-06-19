@@ -19,6 +19,7 @@ export class AddpriceComponent implements OnInit {
     cid: new FormControl(this.service.user.cid),
     name: new FormControl(),
     price: new FormControl('',Validators.pattern(/^(?=.*\d)[0-9]{0,2}(?:\.[0-9]{1,2})?$/)),
+    unlock_fees: new FormControl('',Validators.pattern(/^(?=.*\d)[0-9]{0,2}(?:\.[0-9]{1,2})?$/)),
     status: new FormControl(this.status[1])
   })
   heading:string = 'Add new price list' ;
@@ -64,13 +65,14 @@ export class AddpriceComponent implements OnInit {
     }
   }
   deletePrice() {
-    this.service.deletePrice(this.priceForm.value.id).then((res) => {
+/*     this.service.deletePrice(this.priceForm.value.id).then((res) => {
       if(res.data.status == 'success'){
         this.data.parent.closeDialog()
       } else {
         this.error = 'Failed update pricelist'
       }
-    })
+    }) */
+      this.data.parent.closeDialog()
   }
 
 }
