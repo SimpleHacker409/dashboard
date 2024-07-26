@@ -65,14 +65,13 @@ export class AddpriceComponent implements OnInit {
     }
   }
   deletePrice() {
-/*     this.service.deletePrice(this.priceForm.value.id).then((res) => {
+    this.service.deletePrice(this.priceForm.value.id).then((res) => {
       if(res.data.status == 'success'){
         this.data.parent.closeDialog()
       } else {
         this.error = 'Failed update pricelist'
       }
-    }) */
-      this.data.parent.closeDialog()
+    })
   }
 
 }
