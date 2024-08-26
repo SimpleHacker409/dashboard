@@ -30,6 +30,8 @@ export class RidersComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   emails = [];
+  places: any[] = [];
+  selectedPlace;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -48,7 +50,9 @@ export class RidersComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.loadPlaces()
   }
+
   displayedColumns: string[] = ['name', 'email', 'status', 'user_id'];
   //dataSource = new MatTableDataSource(this.data);
 
@@ -104,7 +108,7 @@ export class RidersComponent implements OnInit {
       this.error = null;
       const startDate = this.dateFormat(this.range.value.start)
       const endDate = this.dateFormat(this.range.value.end)
-      const response = await this.service.addWhiteList(this.emails, startDate, endDate)
+      const response = await this.service.addWhiteList(this.emails, startDate, endDate,this.selectedPlace)
       if(response == "Success") {
         this.emails.splice(0, this.emails.length)
         this.range.reset();
@@ -149,4 +153,8 @@ export class RidersComponent implements OnInit {
     });
   }
 
+  async loadPlaces(){
+    this.places = await this.service.getCompantPlaces()
+    this.selectedPlace = this.places[0].pid
+  }
 }

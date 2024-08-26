@@ -107,9 +107,9 @@ export class SharedServiceService implements OnInit {
     }
   }
 
-  async addWhiteList(emails, startDate, endDate) {
+  async addWhiteList(emails, startDate, endDate, pid) {
     const headers = { 'Content-Type': 'application/json' };
-    let data = {"emails": emails,"cid":this.user.cid,"status": "to activate","startdate": startDate, "enddate":endDate}
+    let data = {"emails": emails,"cid":this.user.cid,"pid":pid,"status": "to activate","startdate": startDate, "enddate":endDate}
     try {
       const response = await axios.post(URL+'addWhitelist', data, {headers});
       if(await response.data.status == "success") {
@@ -279,6 +279,14 @@ export class SharedServiceService implements OnInit {
   }
 
   async getBookingsFunction(){
+
+    //Get places of the company
+    const place_res = await axios.get(URL+'getPlace')
+    const pid = place_res.data.result.filter(item => item.cid == this.user.cid)
+    return pid
+  }
+
+  async getCompantPlaces(){
 
     //Get places of the company
     const place_res = await axios.get(URL+'getPlace')
